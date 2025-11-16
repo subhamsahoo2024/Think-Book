@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
 import toast from "react-hot-toast";
+import authApi from "../lib/authApi";
 
 const AuthContext = createContext();
 
@@ -22,14 +22,11 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (email, password, name) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
-        {
-          email,
-          password,
-          name,
-        }
-      );
+      const response = await authApi.post("/auth/register", {
+        email,
+        password,
+        name,
+      });
       const { user, token: newToken } = response.data;
       setCurrentUser(user);
       setToken(newToken);
@@ -46,13 +43,10 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await authApi.post("/auth/login", {
+        email,
+        password,
+      });
       const { user, token: newToken } = response.data;
       setCurrentUser(user);
       setToken(newToken);
