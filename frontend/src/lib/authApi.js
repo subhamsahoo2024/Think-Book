@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const BASE_URL =
+  process.env.NODE_ENV === "development" ? "http://localhost:3000/api" : "/api";
+
 const authApi = axios.create({
-  baseURL: "http://localhost:3000/api/",
+  baseURL: BASE_URL,
 });
 
 export default authApi;
